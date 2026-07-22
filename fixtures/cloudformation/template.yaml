@@ -1,0 +1,8 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Deliberately insecure local scanner fixture
+Resources:
+  PublicAssets:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: iac-scan-example-public-assets
+      AccessControl: PublicRead
