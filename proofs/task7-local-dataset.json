@@ -1,0 +1,31 @@
+{
+    "provenance": {
+        "origin": "Local Checkov 3.3.8 cyber V2 fixture scan",
+        "capturedOn": "2026-07-21",
+        "sourceItemSha256": [
+            "158fde59f1c51a1026e41714c5a179e0e46674f192a736ede7f4887576715b0c"
+        ],
+        "sanitization": "Reproduced locally from the committed Terraform fixture; omitted only the run-scoped scanId."
+    },
+    "rows": [
+        {
+            "schemaVersion": 2,
+            "findingType": "IAC_MISCONFIGURATION",
+            "policyProfile": "security",
+            "framework": "terraform",
+            "checkId": "CKV_AWS_20",
+            "checkName": "S3 Bucket has an ACL defined which allows public READ access.",
+            "resource": "aws_s3_bucket.public_assets",
+            "filePath": "main.tf",
+            "lineStart": 1,
+            "lineEnd": 4,
+            "checkovCategories": ["GENERAL_SECURITY"],
+            "primaryCategory": "GENERAL_SECURITY",
+            "severity": "UNRATED",
+            "findingFingerprint": "1affa58e43cf0f2e522ca5512be90f664891cf6be68020bcf9bca988860b9f4b",
+            "policyReference": "https://github.com/bridgecrewio/checkov/blob/3.3.8/checkov/terraform/checks/graph_checks/aws/S3PublicACLRead.yaml",
+            "result": "FAILED",
+            "scannerVersion": "3.3.8"
+        }
+    ]
+}

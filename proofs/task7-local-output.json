@@ -1,0 +1,32 @@
+{
+    "provenance": {
+        "origin": "Local Checkov 3.3.8 cyber V2 fixture scan",
+        "capturedOn": "2026-07-21",
+        "sourceSha256": "158fde59f1c51a1026e41714c5a179e0e46674f192a736ede7f4887576715b0c",
+        "sanitization": "Reproduced locally from tests/fixtures/vulnerable/main.tf with only CKV_AWS_20; omitted dynamic scanId and durationMs."
+    },
+    "output": {
+        "schemaVersion": 2,
+        "status": "COMPLETED_WITH_FINDINGS",
+        "policyProfile": "security",
+        "gateDecision": "FAIL",
+        "scanner": "Checkov",
+        "scannerVersion": "3.3.8",
+        "frameworks": ["terraform"],
+        "source": {
+            "kind": "zip_upload",
+            "compressedBytes": 0,
+            "fileCount": 1,
+            "uncompressedBytes": 120
+        },
+        "passedCount": 0,
+        "failedCount": 1,
+        "skippedCount": 0,
+        "findingCount": 1,
+        "totalFindingCount": 1,
+        "findingsByCategory": {"GENERAL_SECURITY": 1},
+        "truncated": false,
+        "truncationReasons": [],
+        "warnings": []
+    }
+}
