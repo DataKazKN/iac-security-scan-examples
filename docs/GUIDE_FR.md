@@ -2,7 +2,7 @@
 
 Ce document est le guide interne KazKN pour comprendre, tester et contrôler
 l'Actor. Il complète le README public. La configuration Pay per event live a été
-vérifiée le 2026-07-22; ses contrôles sont répétés à chaque release.
+vérifiée le 2026-07-24; ses contrôles sont répétés à chaque release.
 
 ## 1. Le concept en clair
 
@@ -459,11 +459,13 @@ pas une promesse de résultat cloud futur si le code ou le snapshot change.
 
 ## 11. Configuration de facturation live
 
-Configuration live vérifiée le 2026-07-22 :
+Configuration live vérifiée le 2026-07-24 :
 
 - modèle : Pay per event ;
 - événements configurés : `apify-actor-start` et `completed-scan` ;
-- prix plat configuré pour `completed-scan` : 0,50 $ ;
+- prix standard Free de `completed-scan` : 0,50 $ ;
+- remises Store actives : Bronze 0,45 $, Silver 0,40 $, Gold 0,35 $,
+  Platinum 0,30 $ et Diamond 0,25 $ ;
 - `apify-default-dataset-item` n'est pas configuré, donc le nombre de findings ne
   change pas le prix d'événement ;
 - `apify-actor-start` conserve le prix officiel par défaut de 0,00005 $ par
@@ -475,28 +477,21 @@ Configuration live vérifiée le 2026-07-22 :
 
 Ce contrôle confirme la configuration live; il ne revendique aucun montant facturé observé pendant un run.
 
-Pourquoi ne pas faire un prix différent par abonnement maintenant :
-
-- Apify supporte officiellement les prix par tiers ;
-- mais le SDK Python 4.0.0 ne facture pas correctement les événements tier-priced
-  via l'API Pay-per-event côté Actor ;
-- donc un pricing tiered maintenant peut créer un scan réussi mais non facturé.
-
-La configuration active garde donc un prix plat pour `completed-scan` afin
-d'éviter l'incompatibilité tiered du SDK actuel. Les tiers ne seront reconsidérés
-qu'après une version SDK compatible et une nouvelle vérification de configuration.
-Le code transforme un `charged_count = 0` en `BILLING_FAILED`; il ne peut toutefois
-pas détecter le bug tiered du SDK quand celui-ci annonce incorrectement
-`charged_count = 1`. La protection réelle consiste donc à ne pas configurer
-`eventTieredPricingUsd`. Comme les résultats ont déjà été persistés avant la
-facturation, il ne faut pas relancer aveuglément après `BILLING_FAILED`.
+Apify résout le niveau d'abonnement du client en un prix effectif pour le run cloud.
+Le code facture seulement le nom d'événement `completed-scan`; il n'essaie pas de
+choisir lui-même le niveau ou le prix. Le simulateur local du SDK Python 4.0.0 ne
+prouve pas cette résolution cloud. Un smoke cloud après activation du pricing reste
+donc obligatoire. Le code transforme un `charged_count = 0` en `BILLING_FAILED`.
+Comme les résultats ont déjà été persistés avant la facturation, il ne faut pas
+relancer aveuglément après `BILLING_FAILED`.
 
 ## 12. Contrôles à chaque release
 
 Checklist propriétaire :
 
 1. Relire la configuration live sans la modifier.
-2. Vérifier que `completed-scan` conserve son prix plat de 0,50 $,
+2. Vérifier les six prix de `completed-scan` (Free 0,50 $, Bronze 0,45 $,
+   Silver 0,40 $, Gold 0,35 $, Platinum 0,30 $, Diamond 0,25 $),
    `apify-actor-start` reste à 0,00005 $/Go,
    `apify-default-dataset-item` est absent, et
    `minimalMaxTotalChargeUsd = 0.51`.
