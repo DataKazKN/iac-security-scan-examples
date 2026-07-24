@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "scanId": "example-scan-id",
+  "status": "COMPLETED_WITH_FINDINGS",
+  "policyProfile": "security",
+  "gateDecision": "FAIL",
+  "scanner": "Checkov",
+  "scannerVersion": "3.3.8",
+  "durationMs": 1234,
+  "frameworks": [
+    "terraform"
+  ],
+  "source": {
+    "kind": "github",
+    "compressedBytes": 1234,
+    "fileCount": 1,
+    "uncompressedBytes": 120
+  },
+  "passedCount": 0,
+  "failedCount": 1,
+  "skippedCount": 0,
+  "findingCount": 1,
+  "totalFindingCount": 1,
+  "findingsByCategory": {
+    "GENERAL_SECURITY": 1
+  },
+  "truncated": false,
+  "truncationReasons": [],
+  "warnings": []
+}

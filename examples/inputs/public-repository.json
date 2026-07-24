@@ -1,0 +1,12 @@
+{
+  "sourceType": "github",
+  "repositoryUrl": "https://github.com/DataKazKN/iac-security-scan-examples",
+  "repositoryRef": "ad600c04599f8a1d353639252ee12d2a5976a732",
+  "subdirectory": "fixtures/terraform",
+  "frameworks": [
+    "terraform"
+  ],
+  "policyProfile": "security",
+  "checkIds": [],
+  "maxFindings": 25
+}

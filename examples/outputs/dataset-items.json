@@ -1,0 +1,24 @@
+[
+  {
+    "schemaVersion": 2,
+    "scanId": "example-scan-id",
+    "findingType": "IAC_MISCONFIGURATION",
+    "policyProfile": "security",
+    "framework": "terraform",
+    "checkId": "CKV_AWS_20",
+    "checkName": "S3 Bucket has an ACL defined which allows public READ access.",
+    "resource": "aws_s3_bucket.public_assets",
+    "filePath": "main.tf",
+    "lineStart": 1,
+    "lineEnd": 4,
+    "checkovCategories": [
+      "GENERAL_SECURITY"
+    ],
+    "primaryCategory": "GENERAL_SECURITY",
+    "severity": "UNRATED",
+    "findingFingerprint": "1affa58e43cf0f2e522ca5512be90f664891cf6be68020bcf9bca988860b9f4b",
+    "policyReference": "https://github.com/bridgecrewio/checkov/blob/3.3.8/checkov/terraform/checks/graph_checks/aws/S3PublicACLRead.yaml",
+    "result": "FAILED",
+    "scannerVersion": "3.3.8"
+  }
+]

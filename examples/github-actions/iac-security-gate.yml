@@ -1,0 +1,81 @@
+name: Hosted IaC security gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "**/*.tf"
+      - "**/*.tf.json"
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/Dockerfile"
+
+permissions:
+  contents: read
+
+jobs:
+  scan-iac:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      APIFY_API_TOKEN: ${{ secrets.APIFY_API_TOKEN }}
+    steps:
+      - name: Run hosted scan and enforce OUTPUT gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          : "${APIFY_API_TOKEN:?Add APIFY_API_TOKEN as a GitHub Actions secret}"
+
+          input_json=$(jq -cn \
+            --arg repository_url "https://github.com/${GITHUB_REPOSITORY}" \
+            --arg repository_ref "${GITHUB_SHA}" '{
+              sourceType: "github",
+              repositoryUrl: $repository_url,
+              repositoryRef: $repository_ref,
+              frameworks: [
+                "terraform",
+                "cloudformation",
+                "kubernetes",
+                "helm",
+                "dockerfile",
+                "github_actions"
+              ],
+              policyProfile: "security",
+              checkIds: [],
+              maxFindings: 500
+            }')
+
+          run_json=$(curl --fail-with-body --silent --show-error \
+            --request POST \
+            "https://api.apify.com/v2/acts/kazkn~hosted-iac-policy-scan-api/runs?waitForFinish=120&maxTotalChargeUsd=0.51" \
+            --header "Authorization: Bearer ${APIFY_API_TOKEN}" \
+            --header "Content-Type: application/json" \
+            --data "${input_json}")
+
+          run_status=$(jq -er '.data.status' <<<"${run_json}")
+          if [[ "${run_status}" != "SUCCEEDED" ]]; then
+            echo "Actor run did not succeed: ${run_status}" >&2
+            exit 1
+          fi
+
+          store_id=$(jq -er '.data.defaultKeyValueStoreId' <<<"${run_json}")
+          output_json=$(curl --fail-with-body --silent --show-error \
+            "https://api.apify.com/v2/key-value-stores/${store_id}/records/OUTPUT" \
+            --header "Authorization: Bearer ${APIFY_API_TOKEN}")
+
+          gate_decision=$(jq -er '.gateDecision' <<<"${output_json}")
+          printf '## IaC security gate\n\n`%s`\n' "${gate_decision}" >>"${GITHUB_STEP_SUMMARY}"
+
+          case "${gate_decision}" in
+            PASS)
+              echo "IaC security gate passed."
+              ;;
+            FAIL|UNKNOWN)
+              echo "IaC security gate blocked: ${gate_decision}" >&2
+              exit 2
+              ;;
+            *)
+              echo "Unexpected gate decision: ${gate_decision}" >&2
+              exit 1
+              ;;
+          esac
