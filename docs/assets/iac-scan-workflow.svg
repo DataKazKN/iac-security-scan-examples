@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560" role="img" aria-labelledby="title description">
+  <title id="title">IaC scan workflow from source to Dataset and automation gate</title>
+  <desc id="description">A GitHub repository or uploaded ZIP is scanned by pinned Checkov policies. Failed policies are written to a Dataset and a separate OUTPUT record provides a PASS, FAIL, or UNKNOWN gate.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#748295"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="560" rx="24" fill="#0b0d10"/>
+  <rect x="0" y="0" width="1400" height="10" rx="5" fill="#6f86ff"/>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <text x="60" y="76" fill="#f4f6f8" font-size="36" font-weight="750">From IaC source to a decision you can automate</text>
+    <text x="60" y="112" fill="#9da6b2" font-size="18">Read-only acquisition, bounded scanning, normalized results</text>
+
+    <rect x="60" y="174" width="300" height="224" rx="18" fill="#14181e" stroke="#303743"/>
+    <text x="88" y="216" fill="#7fa2ff" font-size="14" font-weight="700" letter-spacing="1.5">1 · SOURCE</text>
+    <rect x="88" y="246" width="244" height="54" rx="12" fill="#0f1217" stroke="#38414e"/>
+    <text x="112" y="280" fill="#f0f2f5" font-size="17" font-weight="650">GitHub repository</text>
+    <rect x="88" y="316" width="244" height="54" rx="12" fill="#0f1217" stroke="#38414e"/>
+    <text x="112" y="350" fill="#f0f2f5" font-size="17" font-weight="650">Uploaded ZIP</text>
+
+    <path d="M382 286H470" stroke="#748295" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="494" y="174" width="330" height="224" rx="18" fill="#151a25" stroke="#5369c7"/>
+    <text x="522" y="216" fill="#91a9ff" font-size="14" font-weight="700" letter-spacing="1.5">2 · SCAN</text>
+    <text x="522" y="270" fill="#f4f6f8" font-size="25" font-weight="720">Pinned Checkov 3.3.8</text>
+    <text x="522" y="310" fill="#aeb6c2" font-size="16">Selected IaC formats</text>
+    <text x="522" y="340" fill="#aeb6c2" font-size="16">Security or all-IaC policy set</text>
+    <text x="522" y="370" fill="#aeb6c2" font-size="16">60-second subprocess limit</text>
+
+    <path d="M846 286H922" stroke="#748295" stroke-width="3" marker-end="url(#arrow)"/>
+
+    <rect x="946" y="146" width="394" height="126" rx="18" fill="#14181e" stroke="#303743"/>
+    <text x="974" y="185" fill="#7fa2ff" font-size="14" font-weight="700" letter-spacing="1.5">3A · DATASET</text>
+    <text x="974" y="224" fill="#f4f6f8" font-size="20" font-weight="700">One row per failed policy</text>
+    <text x="974" y="252" fill="#9da6b2" font-size="15">Policy · resource · file · line · fingerprint</text>
+
+    <rect x="946" y="300" width="394" height="126" rx="18" fill="#14181e" stroke="#303743"/>
+    <text x="974" y="339" fill="#7fa2ff" font-size="14" font-weight="700" letter-spacing="1.5">3B · OUTPUT</text>
+    <text x="974" y="378" fill="#f4f6f8" font-size="20" font-weight="700">PASS · FAIL · UNKNOWN</text>
+    <text x="974" y="406" fill="#9da6b2" font-size="15">Status · totals · truncation · safe error</text>
+
+    <text x="60" y="490" fill="#77818e" font-size="14">Read-only source</text>
+    <circle cx="190" cy="485" r="3" fill="#536171"/>
+    <text x="210" y="490" fill="#77818e" font-size="14">No raw source code in results</text>
+    <circle cx="430" cy="485" r="3" fill="#536171"/>
+    <text x="450" y="490" fill="#77818e" font-size="14">API · Task · schedule · webhook</text>
+
+    <rect x="1058" y="466" width="282" height="52" rx="26" fill="#6f86ff"/>
+    <text x="1199" y="499" fill="#ffffff" font-size="16" font-weight="750" text-anchor="middle">Run the prefilled example</text>
+  </g>
+</svg>

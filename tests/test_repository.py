@@ -39,6 +39,7 @@ class RepositoryContractTests(unittest.TestCase):
             "## Features",
             "## What you can test",
             "## Quick start",
+            "## Visual walkthrough",
             "## Setup requirements",
             "## Repository structure",
             "## Run through the Apify API",
@@ -72,6 +73,49 @@ class RepositoryContractTests(unittest.TestCase):
         for phrase in required_phrases:
             with self.subTest(phrase=phrase):
                 self.assertIn(phrase, readme.lower())
+
+    def test_visual_walkthrough_uses_local_assets_and_links_to_live_proof(self) -> None:
+        assets = (
+            ROOT / "docs/assets/iac-scan-workflow.svg",
+            ROOT / "docs/assets/apify-terraform-example.png",
+            ROOT / "docs/assets/public-dataset-results.svg",
+        )
+        for asset in assets:
+            with self.subTest(asset=asset.name):
+                self.assertTrue(asset.is_file())
+                self.assertGreater(asset.stat().st_size, 1_000)
+
+        readme = README.read_text(encoding="utf-8")
+        linked_images = [
+            linked_image
+            for linked_image in re.findall(
+                r"\[!\[([^\]]+)\]\(([^)]+)\)\]\((https://[^)]+)\)",
+                readme,
+            )
+            if linked_image[1].startswith("docs/assets/")
+        ]
+        self.assertEqual(
+            linked_images,
+            [
+                (
+                    "IaC scan workflow from source to Dataset and automation gate",
+                    "docs/assets/iac-scan-workflow.svg",
+                    "https://console.apify.com/actors/hrUBKuy93HIu7dBtp/input",
+                ),
+                (
+                    "Public Terraform scan example on Apify",
+                    "docs/assets/apify-terraform-example.png",
+                    "https://apify.com/kazkn/hosted-iac-policy-scan-api/examples/"
+                    "scan-terraform-security-misconfigurations",
+                ),
+                (
+                    "Real normalized Terraform findings from the public Apify Dataset",
+                    "docs/assets/public-dataset-results.svg",
+                    "https://api.apify.com/v2/datasets/juCpMz5uiUXUi5Ggh/items"
+                    "?clean=true&format=json",
+                ),
+            ],
+        )
 
     def test_relative_markdown_links_resolve(self) -> None:
         markdown_files = tuple(ROOT.rglob("*.md"))

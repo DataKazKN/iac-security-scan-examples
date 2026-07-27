@@ -76,6 +76,27 @@ No local scanner installation is required.
 The commit SHA is immutable, so this quick start keeps producing the same source
 snapshot even when `main` evolves.
 
+## Visual walkthrough
+
+The Actor keeps acquisition, scanning, and automation output separate. Click the
+workflow to open the prefilled input:
+
+[![IaC scan workflow from source to Dataset and automation gate](docs/assets/iac-scan-workflow.svg)](https://console.apify.com/actors/hrUBKuy93HIu7dBtp/input)
+
+The public Terraform Example exposes its complete credential-free input and
+simplified output on Apify:
+
+[![Public Terraform scan example on Apify](docs/assets/apify-terraform-example.png)](https://apify.com/kazkn/hosted-iac-policy-scan-api/examples/scan-terraform-security-misconfigurations)
+
+The result below is based on the real eight-row public Dataset, not a mock. Click it
+to inspect the normalized JSON:
+
+[![Real normalized Terraform findings from the public Apify Dataset](docs/assets/public-dataset-results.svg)](https://api.apify.com/v2/datasets/juCpMz5uiUXUi5Ggh/items?clean=true&format=json)
+
+Use the [Actor Store page](https://apify.com/kazkn/hosted-iac-policy-scan-api) for
+current pricing, supported frameworks, limits, public Tasks, and the complete input
+and output contract.
+
 ## Setup requirements
 
 For Console-only testing, you need only an Apify account. For API or CI usage:
